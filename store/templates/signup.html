@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container col-lg-5 mx-auto">
+    <div class="m-4 p-4">
+        <h1>Create an account</h1>
+        <form class="mt-5" action="/signup" method="post">
+            {% csrf_token %}
+
+            {% if error %}
+            <div class="alert alert-danger" role="alert">
+                {{error}}
+            </div>
+            {% endif %}
+
+            <div class="mb-3">
+                <label for="InputFname1" class="form-label">First Name</label>
+                <input required type="text" name="FirstName" value="{{values.first_name}}" class="form-control" placeholder="Naruto" id="InputFname1">
+            </div>
+            <div class="mb-3">
+                <label for="InputLname1" class="form-label">Last Name</label>
+                <input required type="text" name="LastName" value="{{values.last_name}}" class="form-control" placeholder="Uzumaki" id="InputLname1">
+            </div>
+            <div class="mb-3">
+                <label for="InputPno1" class="form-label">Phone Number</label>
+                <input required type="number" name="phone" value="{{values.phone}}" class="form-control" placeholder="987654321" id="InputPno1">
+            </div>
+            <div class="mb-3">
+                <label for="InputEmail1" class="form-label">Email address</label>
+                <input required type="email" class="form-control" name="email" value="{{values.email}}" placeholder="example@email.com"
+                       id="InputEmail1"
+                       aria-describedby="emailHelp">
+                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+            </div>
+            <div class="mb-3">
+                <label for="InputPassword1" class="form-label">Password</label>
+                <input required type="password" name="password" class="form-control" placeholder="******"
+                       id="InputPassword1">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

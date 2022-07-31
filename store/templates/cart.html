@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load cart %}
+<!-- BODY -->
+<div class="container border rounded p-4 m-4">
+    <h1 class="p-4 text-center">Your Cart</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col">Product</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Price</th>
+            <th scope="col">Amount</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for p in products %}
+        <tr>
+            <td></td>
+            <td><img src="{{p.image.url}}" class="" style="height: 100px;width:100px"></td>
+            <td>{{p.name}}</td>
+            <td>{{p|qty_in_cart:request.session.cart}}</td>
+            <td>₹{{p.price}}</td>
+            <td>₹{{p|amt_product:request.session.cart}}</td>
+            <td><a href="#" class="btn btn-primary"> Remove </a></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+
+        <tfoot>
+        <tr>
+            <th colspan="4"></th>
+            <th>Total amount</th>
+            <th>₹{{products|total_cart_amt:request.session.cart}}</th>
+        </tr>
+        </tfoot>
+    </table>
+    <div class="m-3 p-3 ">
+        <a href="#" class="btn btn-primary col-lg-3 float-end" data-bs-toggle="modal" data-bs-target="#orderModal">
+            Check Out </a>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="orderModalLabel">Confirm your order</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="m-2 p-2 ">
+                    <form action="/checkout" method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label> Please provide your address </label>
+                            <input type="text" name="address" id="" class="form-control mt-2"/>
+                        </div>
+                        <input  type="submit" class="btn btn-primary float-end mt-4" value="Confirm">
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+
+
